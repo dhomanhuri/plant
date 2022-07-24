@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
         stream: Database.getData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text("error");
+            return const Text("error");
           } else if (snapshot.hasData || snapshot.data != null) {
             return ListView.separated(
               itemBuilder: ((context, index) {
@@ -57,7 +57,7 @@ class Body extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                               elevation: 4,
-                              child: Container(
+                              child: SizedBox(
                                 child: Center(child: Text(lvpanjang)),
                                 // color: Colors.grey,
                                 width: MediaQuery.of(context).size.width / 4,
@@ -69,7 +69,7 @@ class Body extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                               elevation: 4,
-                              child: Container(
+                              child: SizedBox(
                                 child: Center(child: Text(lvJumlah)),
                                 // color: Colors.grey,
                                 width: MediaQuery.of(context).size.width / 4,
@@ -83,11 +83,11 @@ class Body extends StatelessWidget {
                   ),
                 );
               }),
-              separatorBuilder: (context, index) => SizedBox(height: 8.0),
+              separatorBuilder: (context, index) => const SizedBox(height: 8.0),
               itemCount: snapshot.data!.docs.length,
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
             ),

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,6 +12,5 @@ class HomePage extends StatelessWidget {
         title: const Text('Home Page'),
       ),
     );
-    
   }
 }

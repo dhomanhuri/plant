@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'dart:io';
 import '../../../models/articles.dart';
 
 class Body extends StatefulWidget {
@@ -72,7 +70,7 @@ class _BodyState extends State<Body> {
       ),
       child: StreamBuilder<List<Articles>>(
         builder: (context, snapshot) {
-          print(snapshot);
+          // print(snapshot);
           if (snapshot.hasError) {
             return const Text("asdsad");
           } else if (snapshot.hasData) {
@@ -81,7 +79,7 @@ class _BodyState extends State<Body> {
               children: articles.map(buildArticles).toList(),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

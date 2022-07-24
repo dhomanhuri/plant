@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:evelynapp/screen/dashboard/dashboard.dart';
 import 'package:evelynapp/screen/splashscreen/components/body.dart';
 import 'package:flutter/material.dart';

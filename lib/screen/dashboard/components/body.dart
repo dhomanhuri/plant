@@ -1,8 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:hexcolor/hexcolor.dart';
+// import 'package:evelynapp/dbservices.dart';
+import 'package:evelynapp/storage_service.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -12,17 +14,22 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  final Storage storage = Storage();
   String _selectedValue = '';
-  Future<Widget> _getImage(BuildContext context, String imageName) async {
-    Image image;
-    await FireStorageService.loadImage(context, imageName).then((value) {
-      image = Image.network(
-        value.toString(),
-        fit: BoxFit.scaleDown,
-      );
-    });
-    return image;
-  }
+  String batang = '';
+  String daun = '';
+
+  // Future<Widget> _getImage(BuildContext context, String imageName) async {
+  //   Image image;
+  //   await FireStorageService.loadImage(context, imageName).then((value) {
+  //     image = Image.network(
+  //       value.toString(),
+  //       fit: BoxFit.scaleDown,
+  //     );
+
+  //     return image;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,7 @@ class _BodyState extends State<Body> {
         // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(height: 40),
+          const SizedBox(height: 70),
           DatePicker(
             DateTime.now(),
             initialSelectedDate: DateTime.now(),
@@ -46,19 +53,25 @@ class _BodyState extends State<Body> {
             height: 100,
             onDateChange: (date) {
               // New date selected
-              setState(() {
-                _selectedValue = date.toString();
-                print(_selectedValue);
-              });
+              setState(
+                () {
+                  _selectedValue = date.toString();
+                  var splitag = _selectedValue.split(" ");
+                  batang = 'batang-' + splitag[0].toString() + '.png';
+                  daun = 'daun-' + splitag[0].toString() + '.png';
+                  // print('batang = ' + batang);
+                  // print('daun = ' + daun);
+                },
+              );
             },
           ),
-          const SizedBox(height: 100),
+          const SizedBox(height: 70),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 width: MediaQuery.of(context).size.width / 2.2,
                 height: MediaQuery.of(context).size.height / 2.5,
                 // color: Colors.black,
@@ -68,18 +81,35 @@ class _BodyState extends State<Body> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CircleAvatar(
-                        radius: 80,
-                        backgroundImage:
-                            NetworkImage('https://picsum.photos/120/200'),
+                      FutureBuilder(
+                        future: storage.downloadURL(batang),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              snapshot.hasData) {
+                            return CircleAvatar(
+                              radius: 80,
+                              backgroundImage: NetworkImage(snapshot.data!),
+                            );
+                          }
+                          if (snapshot.connectionState ==
+                                  ConnectionState.waiting ||
+                              !snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          }
+                          return Container();
+                        },
                       ),
-                      Text("Pertambahan Tinggi Batang",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white,
-                          )),
+                      const Text(
+                        "Pertambahan Tinggi Batang",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -88,7 +118,7 @@ class _BodyState extends State<Body> {
                 width: 10,
               ),
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 width: MediaQuery.of(context).size.width / 2.2,
                 height: MediaQuery.of(context).size.height / 2.5,
                 alignment: Alignment.center,
@@ -98,13 +128,28 @@ class _BodyState extends State<Body> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CircleAvatar(
-                        radius: 80,
-                        backgroundImage:
-                            NetworkImage('https://picsum.photos/120/200'),
+                      FutureBuilder(
+                        future: storage.downloadURL(daun),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              snapshot.hasData) {
+                            return CircleAvatar(
+                              radius: 80,
+                              backgroundImage: NetworkImage(snapshot.data!),
+                            );
+                          }
+                          if (snapshot.connectionState ==
+                                  ConnectionState.waiting ||
+                              !snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          }
+                          return Container();
+                        },
                       ),
                       const Text(
-                        "Perbandingan Warna Daun",
+                        "Jumlah Daun Terdeteksi",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -117,6 +162,31 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ],
+          ),
+          Container(
+            child: Card(
+              color: HexColor("#003333"),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.camera_alt_rounded,
+                      ),
+                      iconSize: 50,
+                      color: Colors.white,
+                      splashColor: Colors.purple,
+                      onPressed: () {},
+                    ),
+                    Text(
+                      'Perbarui Foto',
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ),
+            ),
           )
         ],
       ),
@@ -124,9 +194,9 @@ class _BodyState extends State<Body> {
   }
 }
 
-class FireStorageService extends ChangeNotifier {
-  FireStorageService();
-  static Future<dynamic> loadImage(BuildContext context, String image) async {
-    return await FirebaseStorage.instance.ref().child(image).getDownloadURL();
-  }
-}
+// class FireStorageService extends ChangeNotifier {
+//   FireStorageService();
+//   static Future<dynamic> loadImage(BuildContext context, String image) async {
+//     return await FirebaseStorage.instance.ref().child(image).getDownloadURL();
+//   }
+// }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import 'package:hexcolor/hexcolor.dart';
@@ -46,7 +48,7 @@ class Body extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         elevation: 4,
-                        child: Container(
+                        child: SizedBox(
                           // color: Colors.grey,
                           width: MediaQuery.of(context).size.width / 4,
                           height: MediaQuery.of(context).size.height / 10,
@@ -57,7 +59,7 @@ class Body extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         elevation: 4,
-                        child: Container(
+                        child: SizedBox(
                           // color: Colors.grey,
                           width: MediaQuery.of(context).size.width / 4,
                           height: MediaQuery.of(context).size.height / 10,
