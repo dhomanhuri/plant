@@ -6,6 +6,8 @@ import 'package:hexcolor/hexcolor.dart';
 // import 'package:evelynapp/dbservices.dart';
 import 'package:evelynapp/storage_service.dart';
 
+import 'package:firebase_database/firebase_database.dart';
+
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
@@ -14,7 +16,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  TextEditingController second = TextEditingController();
+
+  TextEditingController third = TextEditingController();
+
+  final fb = FirebaseDatabase.instance;
   final Storage storage = Storage();
+
   String _selectedValue = '';
   String batang = '';
   String daun = '';
@@ -33,6 +41,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    final ref = fb.ref().child('capture/waiting');
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -177,7 +186,17 @@ class _BodyState extends State<Body> {
                       iconSize: 50,
                       color: Colors.white,
                       splashColor: Colors.purple,
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Request Update Photos"),
+                        ));
+                        ref.set({
+                          "status": true,
+                        }).asStream();
+                        // Navigator.pushReplacement(
+                        //     context, MaterialPageRoute(builder: (_) => Home() ));
+                      },
                     ),
                     Text(
                       'Perbarui Foto',

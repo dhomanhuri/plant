@@ -14,10 +14,10 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('History'),
-        leading: Container(),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('History'),
+      //   leading: Container(),
+      // ),
       body: const Body(),
       bottomNavigationBar:
           const CustomBottomNavBar(selectedMenu: MenuState.home),

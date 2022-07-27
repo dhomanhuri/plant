@@ -2,6 +2,8 @@
 import 'package:evelynapp/screen/articlesscreen/ArtikelScreen.dart';
 import 'package:evelynapp/screen/dashboard/dashboard.dart';
 import 'package:evelynapp/screen/historyScreen/HistoryScreen.dart';
+import 'package:evelynapp/screen/historyScreen/components/readfb.dart';
+import 'package:evelynapp/screen/historyScreen/components/test.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:flutter_svg/flutter_svg.dart';
@@ -66,7 +68,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HistoryScreen(),
+                          builder: (context) => HistoryScreen(),
                         ));
                   }),
               // IconButton(
@@ -77,19 +79,19 @@ class CustomBottomNavBar extends StatelessWidget {
               //   icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
               //   onPressed: () {},
               // ),
-              IconButton(
-                icon: Icon(
-                  Icons.article,
-                  color: MenuState.profile == selectedMenu
-                      ? Colors.grey
-                      : inActiveIconColor,
-                ),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ArticlesScreen()),
-                ),
-              ),
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.article,
+              //     color: MenuState.profile == selectedMenu
+              //         ? Colors.grey
+              //         : inActiveIconColor,
+              //   ),
+              //   onPressed: () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => const ArticlesScreen()),
+              //   ),
+              // ),
             ],
           )),
     );
