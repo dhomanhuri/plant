@@ -27,18 +27,6 @@ class _BodyState extends State<Body> {
   String batang = '';
   String daun = '';
 
-  // Future<Widget> _getImage(BuildContext context, String imageName) async {
-  //   Image image;
-  //   await FireStorageService.loadImage(context, imageName).then((value) {
-  //     image = Image.network(
-  //       value.toString(),
-  //       fit: BoxFit.scaleDown,
-  //     );
-
-  //     return image;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final ref = fb.ref().child('capture/waiting');
@@ -50,14 +38,15 @@ class _BodyState extends State<Body> {
             image: AssetImage("assets/image/BG3.png"), fit: BoxFit.cover),
       ),
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(height: 70),
+          // const SizedBox(height: 70),
           DatePicker(
-            DateTime.now(),
+            DateTime(2022, 7, 1),
             initialSelectedDate: DateTime.now(),
             selectionColor: HexColor("#003333"),
+            // startDate:DateTime(2022, 1, 1),
             selectedTextColor: Colors.white,
             height: 100,
             onDateChange: (date) {
@@ -74,7 +63,7 @@ class _BodyState extends State<Body> {
               );
             },
           ),
-          const SizedBox(height: 70),
+          // const SizedBox(height: 70),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +76,7 @@ class _BodyState extends State<Body> {
                 child: Card(
                   color: HexColor("#003333"),
                   child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.spaceEvenly,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       FutureBuilder(

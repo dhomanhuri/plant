@@ -14,11 +14,11 @@ class Body extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            "IMPLEMENTASI SISTEM PENDETEKSI PERTUMBUHAN TANAMAN BUAH ANGGUR GREENHOUSE BERBASIS IMAGE PROCESSING",
+            "PLANT GROWTH",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 25,
             ),
           ),
           const SizedBox(height: 200),

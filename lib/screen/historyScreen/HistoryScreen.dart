@@ -18,9 +18,11 @@ class HistoryScreen extends StatelessWidget {
       //   title: const Text('History'),
       //   leading: Container(),
       // ),
-      body: const Body(),
+      body: Body(),
       bottomNavigationBar:
           const CustomBottomNavBar(selectedMenu: MenuState.home),
+
+      resizeToAvoidBottomInset: false,
     );
   }
 }
